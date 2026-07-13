@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 7%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 7%;
+  --primary: 45 68% 46%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 12%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 45 68% 96%;
+  --accent-foreground: 0 0% 12%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 45 68% 46%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 222 16% 6%;
+  --foreground: 0 0% 96%;
+  --card: 222 14% 9%;
+  --card-foreground: 0 0% 96%;
+  --popover: 222 14% 9%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 45 68% 52%;
+  --primary-foreground: 0 0% 8%;
+  --secondary: 222 14% 14%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 222 14% 14%;
+  --muted-foreground: 0 0% 68%;
+  --accent: 45 30% 16%;
+  --accent-foreground: 0 0% 96%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 96%;
+  --border: 222 12% 18%;
+  --input: 222 12% 18%;
+  --ring: 45 68% 52%;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  background-image:
+    radial-gradient(circle at top, rgba(201, 162, 39, 0.16), transparent 26%),
+    radial-gradient(circle at right bottom, rgba(255, 255, 255, 0.06), transparent 30%);
+}
+
+::selection {
+  background: rgba(201, 162, 39, 0.28);
+  color: currentColor;
+}
+
+.glass-panel {
+  backdrop-filter: blur(18px);
+  background: color-mix(in hsl, hsl(var(--card)) 84%, transparent);
+}
+
+.brand-gradient {
+  background: linear-gradient(135deg, #0f0f10 0%, #242425 56%, #c9a227 140%);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.28);
+  border-radius: 999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
