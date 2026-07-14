@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
@@ -54,7 +55,7 @@ export async function getSession() {
   }
 }
 
-export async function getCurrentUser() {
+export const getCurrentUser = cache(async function getCurrentUser() {
   const session = await getSession();
   if (!session) {
     return null;
@@ -73,7 +74,7 @@ export async function getCurrentUser() {
       updatedAt: true,
     },
   });
-}
+});
 
 export async function requireUser() {
   const user = await getCurrentUser();
