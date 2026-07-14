@@ -12,7 +12,7 @@ export type HealthScoreInput = {
 };
 
 export function calculatePropertyHealthScore(input: HealthScoreInput) {
-  const photoScore = Math.min(input.photos, 20) * 2;
+  const photoScore = Math.min(input.photos, 20) * 3;
   const bonus = [
     input.floorplan,
     input.videoTour,
@@ -23,9 +23,9 @@ export function calculatePropertyHealthScore(input: HealthScoreInput) {
     input.bathroomPhotos,
     input.descriptionComplete,
     input.socialPosted,
-  ].reduce((total, value) => total + (value ? 3 : 0), 0);
+  ].reduce((total, value) => total + (value ? 4 : 0), 0);
 
-  const score = Math.max(0, Math.min(100, photoScore + bonus + 10));
+  const score = Math.max(0, Math.min(100, photoScore + bonus + 4));
   const suggestions = buildHealthSuggestions(input, score);
 
   return { score, suggestions };
