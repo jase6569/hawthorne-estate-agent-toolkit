@@ -14,6 +14,29 @@ type Props = {
   defaultPropertyName?: string;
 };
 
+type FlagKey =
+  | "floorplan"
+  | "videoTour"
+  | "epc"
+  | "staging"
+  | "gardenPhotos"
+  | "kitchenPhotos"
+  | "bathroomPhotos"
+  | "descriptionComplete"
+  | "socialPosted";
+
+const checklistItems: Array<{ key: FlagKey; label: string; tip: string }> = [
+  { key: "floorplan", label: "Floorplan", tip: "To-scale, with room dimensions and a compass orientation marked." },
+  { key: "videoTour", label: "Video Tour", tip: "Start at the front door and walk room to room in one continuous take." },
+  { key: "epc", label: "EPC", tip: "Attach the current Energy Performance Certificate before the listing goes live." },
+  { key: "staging", label: "Staging", tip: "Declutter surfaces, open curtains for natural light, add fresh flowers or neutral throws." },
+  { key: "gardenPhotos", label: "Garden Photos", tip: "Shoot from the back corner looking toward the house to show the full plot, plus a close-up of the patio or seating area." },
+  { key: "kitchenPhotos", label: "Kitchen Photos", tip: "Shoot from the doorway to capture the full run of units, then a second angle showing any island or dining space." },
+  { key: "bathroomPhotos", label: "Bathroom Photos", tip: "Shoot from the doorway to show the full room, plus a close-up of standout fittings like a rainfall shower or freestanding bath." },
+  { key: "descriptionComplete", label: "Description Complete", tip: "Include room measurements, lifestyle context, and nearby transport or schools." },
+  { key: "socialPosted", label: "Social Posted", tip: "Share on Instagram/Facebook with the best exterior or kitchen shot as the cover image." },
+];
+
 export function HealthScoreForm({ defaultPropertyName = "" }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -80,10 +103,17 @@ export function HealthScoreForm({ defaultPropertyName = "" }: Props) {
           </div>
 
           <div className="grid gap-3 rounded-2xl border border-border/70 bg-background/70 p-4 lg:col-span-2 sm:grid-cols-2">
-            {Object.entries(flags).map(([key, value]) => (
-              <label key={key} className="flex items-center gap-3 rounded-xl border border-border/60 bg-background px-4 py-3 text-sm capitalize">
-                <Checkbox checked={value} onCheckedChange={(checked) => updateFlag(key as keyof typeof flags, checked === true)} />
-                {key.replace(/([A-Z])/g, " $1")}
+            {checklistItems.map((item) => (
+              <label key={item.key} className="flex items-start gap-3 rounded-xl border border-border/60 bg-background px-4 py-3 text-sm">
+                <Checkbox
+                  className="mt-0.5"
+                  checked={flags[item.key]}
+                  onCheckedChange={(checked) => updateFlag(item.key, checked === true)}
+                />
+                <span>
+                  <span className="font-medium">{item.label}</span>
+                  <span className="mt-0.5 block text-xs leading-snug text-muted-foreground">{item.tip}</span>
+                </span>
               </label>
             ))}
           </div>
