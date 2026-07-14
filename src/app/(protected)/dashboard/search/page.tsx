@@ -23,9 +23,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <CardTitle className="font-bricolage text-2xl">Global Search</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="flex gap-3" action="/dashboard/search" method="get">
+          <form className="flex flex-col gap-3 sm:flex-row" action="/dashboard/search" method="get">
             <Input name="q" placeholder="Search properties, feedback, reports, QR codes, and checklists" defaultValue={query} />
-            <Button type="submit">Search</Button>
+            <Button type="submit" className="sm:w-auto">Search</Button>
           </form>
         </CardContent>
       </Card>

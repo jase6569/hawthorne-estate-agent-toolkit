@@ -56,7 +56,7 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
               </div>
               <div>
                 <p className="font-bricolage text-lg font-semibold tracking-tight">Hawthorne</p>
-                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Estate Agent Toolkit</p>
+                <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Estate Agent Toolkit</p>
               </div>
             </div>
 
@@ -109,13 +109,13 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-[320px] border-r border-border/70 bg-background/98">
-                    <div className="mb-6 flex items-center gap-3 pr-8">
+                    <div className="mb-6 flex items-center gap-3 pr-6">
                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold text-sm font-black text-gold-foreground">
                         H
                       </div>
                       <div>
                         <p className="font-bricolage text-lg font-semibold tracking-tight">Hawthorne</p>
-                        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Estate Agent Toolkit</p>
+                        <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Estate Agent Toolkit</p>
                       </div>
                     </div>
                     <nav className="flex flex-col gap-1">
@@ -139,6 +139,13 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
                           </Link>
                         );
                       })}
+                      <Link
+                        href="/api/auth/logout"
+                        className="mt-2 flex items-center gap-3 rounded-2xl border border-border/70 px-4 py-3 text-sm font-medium text-muted-foreground transition-all hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <ArrowLeftRight className="h-4 w-4" />
+                        Logout
+                      </Link>
                     </nav>
                   </SheetContent>
                 </Sheet>

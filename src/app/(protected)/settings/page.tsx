@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -73,7 +74,7 @@ export default function SettingsPage() {
               <Input id="name" value={name} onChange={(event) => setName(event.target.value)} required />
             </div>
             <label className="flex items-center gap-3 rounded-2xl border border-border/70 bg-background/70 p-4">
-              <input type="checkbox" checked={notificationsEnabled} onChange={(event) => setNotificationsEnabled(event.target.checked)} />
+              <Checkbox checked={notificationsEnabled} onCheckedChange={(checked) => setNotificationsEnabled(checked === true)} />
               <span className="text-sm font-medium">Notifications enabled</span>
             </label>
             <Button type="submit" disabled={isPending}>

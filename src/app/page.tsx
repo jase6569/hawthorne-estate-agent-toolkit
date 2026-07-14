@@ -21,9 +21,9 @@ export default async function HomePage() {
     <main className="relative overflow-hidden">
       <div className="absolute inset-0 bg-brand-radial opacity-70" />
       <section className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-        <header className="mb-12 flex items-center justify-between rounded-full border border-border/70 bg-background/70 px-4 py-3 shadow-soft backdrop-blur-xl">
+        <header className="mb-12 flex flex-col gap-3 rounded-3xl border border-border/70 bg-background/70 px-4 py-3 shadow-soft backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:rounded-full">
           <div>
-            <p className="font-bricolage text-xl font-semibold">Hawthorne Estate Agent Toolkit</p>
+            <p className="font-bricolage text-lg font-semibold sm:text-xl">Hawthorne Estate Agent Toolkit</p>
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Hawthorne Systems</p>
           </div>
           <div className="flex items-center gap-2">
@@ -36,10 +36,10 @@ export default async function HomePage() {
               </Button>
             ) : (
               <>
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" className="flex-1 sm:flex-none">
                   <Link href="/login">Sign in</Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="flex-1 sm:flex-none">
                   <Link href="/register">Create account</Link>
                 </Button>
               </>

@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function ViewingFeedbackForm() {
   const router = useRouter();
@@ -99,11 +100,11 @@ export function ViewingFeedbackForm() {
             <Textarea id="comments" value={form.comments} onChange={(event) => setForm((current) => ({ ...current, comments: event.target.value }))} required />
           </div>
           <div className="flex items-center gap-3 rounded-2xl border border-border/70 bg-background/70 p-4 md:col-span-2">
-            <input id="wouldRecommend" type="checkbox" checked={form.wouldRecommend} onChange={(event) => setForm((current) => ({ ...current, wouldRecommend: event.target.checked }))} />
+            <Checkbox id="wouldRecommend" checked={form.wouldRecommend} onCheckedChange={(checked) => setForm((current) => ({ ...current, wouldRecommend: checked === true }))} />
             <Label htmlFor="wouldRecommend">Would Recommend</Label>
           </div>
           <div className="flex items-center gap-3 rounded-2xl border border-border/70 bg-background/70 p-4 md:col-span-2">
-            <input id="interested" type="checkbox" checked={form.interested} onChange={(event) => setForm((current) => ({ ...current, interested: event.target.checked }))} />
+            <Checkbox id="interested" checked={form.interested} onCheckedChange={(checked) => setForm((current) => ({ ...current, interested: checked === true }))} />
             <Label htmlFor="interested">Interested?</Label>
           </div>
           <Button type="submit" className="md:col-span-2" disabled={isPending}>

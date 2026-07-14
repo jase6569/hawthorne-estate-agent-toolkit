@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function CommissionCalculatorForm() {
   const router = useRouter();
@@ -59,7 +60,7 @@ export function CommissionCalculatorForm() {
             <Input id="commissionPercent" type="number" min={0} step="0.01" value={commissionPercent} onChange={(event) => setCommissionPercent(Number(event.target.value))} />
           </div>
           <label className="flex items-center gap-3 rounded-2xl border border-border/70 bg-background/70 p-4 md:col-span-2">
-            <input type="checkbox" checked={vatEnabled} onChange={(event) => setVatEnabled(event.target.checked)} />
+            <Checkbox checked={vatEnabled} onCheckedChange={(checked) => setVatEnabled(checked === true)} />
             <span className="text-sm font-medium">VAT Yes/No</span>
           </label>
           <Button type="submit" className="md:col-span-2" disabled={isPending}>
