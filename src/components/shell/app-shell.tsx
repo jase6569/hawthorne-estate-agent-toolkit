@@ -75,6 +75,7 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
                   <Link
                     key={item.href}
                     href={item.href as never}
+                    prefetch={false}
                     className={cn(
                       "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all",
                       active
@@ -133,6 +134,7 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
                           <Link
                             key={item.href}
                             href={item.href as never}
+                            prefetch={false}
                             className={cn(
                               "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all",
                               active
@@ -147,6 +149,7 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
                       })}
                       <Link
                         href="/api/auth/logout"
+                        prefetch={false}
                         className="mt-2 flex items-center gap-3 rounded-2xl border border-border/70 px-4 py-3 text-sm font-medium text-muted-foreground transition-all hover:bg-accent hover:text-accent-foreground"
                       >
                         <ArrowLeftRight className="h-4 w-4" />
@@ -163,13 +166,13 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3">
-                <Link href="/dashboard/search" className="hidden items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:flex">
+                <Link href="/dashboard/search" prefetch={false} className="hidden items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:flex">
                   <Search className="h-4 w-4" />
                   Global search
                 </Link>
                 <ThemeToggle />
                 <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
-                  <Link href="/api/auth/logout">
+                  <Link href="/api/auth/logout" prefetch={false}>
                     <ArrowLeftRight className="h-4 w-4" />
                     Logout
                   </Link>

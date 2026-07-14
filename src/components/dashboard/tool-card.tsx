@@ -21,7 +21,7 @@ export function ToolCard({ title, description, icon: Icon, href, className }: To
             <Icon className="h-5 w-5" />
           </div>
           <Button asChild variant="ghost" size="sm" className="shrink-0">
-            <Link href={href as never}>
+            <Link href={href as never} prefetch={false}>
               Open
               <ArrowRight className="h-4 w-4" />
             </Link>

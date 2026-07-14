@@ -56,7 +56,7 @@ function ResultGroup({ title, items }: { title: string; items: Array<{ key: stri
       <CardContent className="space-y-3">
         {items.length ? (
           items.map((item) => (
-            <Link key={item.key} href={item.href as never} className="block rounded-2xl border border-border/60 bg-background/70 p-4 transition hover:border-primary/40">
+            <Link key={item.key} href={item.href as never} prefetch={false} className="block rounded-2xl border border-border/60 bg-background/70 p-4 transition hover:border-primary/40">
               <p className="font-medium">{item.label}</p>
               <p className="mt-1 text-sm text-muted-foreground">{item.detail}</p>
             </Link>

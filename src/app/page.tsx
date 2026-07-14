@@ -29,7 +29,7 @@ export default async function HomePage() {
           <div className="flex items-center gap-2">
             {user ? (
               <Button asChild>
-                <Link href="/dashboard">
+                <Link href="/dashboard" prefetch={false}>
                   Open dashboard
                   <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -60,13 +60,13 @@ export default async function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="shadow-premium">
-                <Link href={user ? "/dashboard" : "/register"}>
+                <Link href={user ? "/dashboard" : "/register"} prefetch={false}>
                   {user ? "Open dashboard" : "Start free"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/dashboard/search">Explore tools</Link>
+                <Link href="/dashboard/search" prefetch={false}>Explore tools</Link>
               </Button>
             </div>
 
