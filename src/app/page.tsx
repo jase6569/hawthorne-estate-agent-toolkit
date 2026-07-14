@@ -49,13 +49,14 @@ export default async function HomePage() {
 
         <div className="grid flex-1 items-center gap-12 py-6 lg:grid-cols-[1.1fr_0.9fr] lg:py-12">
           <div className="max-w-3xl">
-            <Badge variant="gold" className="mb-6 w-fit">Free lead magnet for estate agents</Badge>
+            <Badge variant="gold" className="mb-6 w-fit">100% free, always &mdash; no card required</Badge>
             <h1 className="font-bricolage text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
               Premium tools that help estate agents win trust faster.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
               Hawthorne Systems gives agents immediate value through scoring, feedback, reporting, and marketing tools designed to improve listing
-              performance without pushing a hard sell.
+              performance without pushing a hard sell. Every tool is completely free to use, for as long as you need it &mdash; no trial period, no
+              credit card, no hidden costs.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="shadow-premium">

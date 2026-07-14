@@ -63,7 +63,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         <CardDescription>
           {mode === "login"
             ? "Access your private estate agent toolkit and review activity history."
-            : "Start using the free Hawthorne lead magnet tools in a private workspace."}
+            : "Start using the Hawthorne toolkit in a private workspace — 100% free, always. No trial, no card, no catch."}
         </CardDescription>
       </CardHeader>
       <CardContent>
