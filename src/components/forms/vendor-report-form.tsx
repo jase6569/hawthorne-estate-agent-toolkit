@@ -21,21 +21,25 @@ export function VendorReportForm() {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/vendor-report", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyName, notes, offers }),
-      });
+      try {
+        const response = await fetch("/api/vendor-report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ propertyName, notes, offers }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Could not save report");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Could not save report");
+          return;
+        }
+
+        toast.success(payload.message ?? "Vendor report saved");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "Vendor report saved");
-      router.refresh();
     });
   }
 

@@ -26,26 +26,30 @@ export function AuthForm({ mode }: AuthFormProps) {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch(mode === "login" ? "/api/auth/login" : "/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: mode === "register" ? name : undefined,
-          email,
-          password,
-        }),
-      });
+      try {
+        const response = await fetch(mode === "login" ? "/api/auth/login" : "/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: mode === "register" ? name : undefined,
+            email,
+            password,
+          }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Unable to continue");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Unable to continue");
+          return;
+        }
+
+        toast.success(payload.message ?? (mode === "login" ? "Welcome back" : "Account created"));
+        router.push("/dashboard");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? (mode === "login" ? "Welcome back" : "Account created"));
-      router.push("/dashboard");
-      router.refresh();
     });
   }
 

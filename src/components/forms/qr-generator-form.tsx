@@ -18,21 +18,25 @@ export function QrGeneratorForm() {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/qr", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyUrl }),
-      });
+      try {
+        const response = await fetch("/api/qr", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ propertyUrl }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Could not generate QR code");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Could not generate QR code");
+          return;
+        }
+
+        toast.success(payload.message ?? "QR code generated");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "QR code generated");
-      router.refresh();
     });
   }
 

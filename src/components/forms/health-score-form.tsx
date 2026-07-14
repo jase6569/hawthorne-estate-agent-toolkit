@@ -35,21 +35,25 @@ export function HealthScoreForm({ defaultPropertyName = "" }: Props) {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/health-score", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyName, photos, ...flags }),
-      });
+      try {
+        const response = await fetch("/api/health-score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ propertyName, photos, ...flags }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Could not calculate score");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Could not calculate score");
+          return;
+        }
+
+        toast.success(payload.message ?? "Score generated");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "Score generated");
-      router.refresh();
     });
   }
 

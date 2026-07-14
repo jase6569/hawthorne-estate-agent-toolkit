@@ -20,21 +20,25 @@ export function CommissionCalculatorForm() {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/commission", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyPrice, commissionPercent, vatEnabled }),
-      });
+      try {
+        const response = await fetch("/api/commission", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ propertyPrice, commissionPercent, vatEnabled }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Could not save calculation");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Could not save calculation");
+          return;
+        }
+
+        toast.success(payload.message ?? "Calculation saved");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "Calculation saved");
-      router.refresh();
     });
   }
 

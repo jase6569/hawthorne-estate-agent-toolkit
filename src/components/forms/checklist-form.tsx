@@ -27,21 +27,25 @@ export function ChecklistForm() {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/checklist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ propertyName, title, items }),
-      });
+      try {
+        const response = await fetch("/api/checklist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ propertyName, title, items }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Could not save checklist");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Could not save checklist");
+          return;
+        }
+
+        toast.success(payload.message ?? "Checklist saved");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "Checklist saved");
-      router.refresh();
     });
   }
 

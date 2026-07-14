@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import PDFDocument from "pdfkit";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
+import { handleApiError } from "@/lib/api-error";
 
 function createPdfBuffer(report: Awaited<ReturnType<typeof prisma.vendorReport.findUnique>>) {
   return new Promise<Buffer>((resolve, reject) => {
@@ -54,25 +55,29 @@ function createPdfBuffer(report: Awaited<ReturnType<typeof prisma.vendorReport.f
 }
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getCurrentUser();
+  try {
+    const user = await getCurrentUser();
 
-  if (!user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const report = await prisma.vendorReport.findFirst({ where: { id, userId: user.id } });
+
+    if (!report) {
+      return NextResponse.json({ message: "Report not found" }, { status: 404 });
+    }
+
+    const buffer = await createPdfBuffer(report);
+
+    return new NextResponse(new Uint8Array(buffer), {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="${report.pdfFileName ?? "vendor-report.pdf"}"`,
+      },
+    });
+  } catch (error) {
+    return handleApiError(error);
   }
-
-  const { id } = await params;
-  const report = await prisma.vendorReport.findFirst({ where: { id, userId: user.id } });
-
-  if (!report) {
-    return NextResponse.json({ message: "Report not found" }, { status: 404 });
-  }
-
-  const buffer = await createPdfBuffer(report);
-
-  return new NextResponse(new Uint8Array(buffer), {
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${report.pdfFileName ?? "vendor-report.pdf"}"`,
-    },
-  });
 }

@@ -17,13 +17,20 @@ export default function SettingsPage() {
 
   useEffect(() => {
     void (async () => {
-      const response = await fetch("/api/me");
-      if (!response.ok) {
-        return;
+      try {
+        const response = await fetch("/api/me");
+        if (!response.ok) {
+          return;
+        }
+        const payload = (await response.json().catch(() => null)) as { name: string; notificationsEnabled: boolean } | null;
+        if (!payload) {
+          return;
+        }
+        setName(payload.name);
+        setNotificationsEnabled(payload.notificationsEnabled);
+      } catch {
+        toast.error("Unable to load your settings.");
       }
-      const payload = (await response.json()) as { name: string; notificationsEnabled: boolean };
-      setName(payload.name);
-      setNotificationsEnabled(payload.notificationsEnabled);
     })();
   }, []);
 
@@ -31,21 +38,25 @@ export default function SettingsPage() {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/settings", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, notificationsEnabled }),
-      });
+      try {
+        const response = await fetch("/api/settings", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, notificationsEnabled }),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Unable to save settings");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Unable to save settings");
+          return;
+        }
+
+        toast.success(payload.message ?? "Settings saved");
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "Settings saved");
-      router.refresh();
     });
   }
 

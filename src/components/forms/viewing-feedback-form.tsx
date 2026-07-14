@@ -29,32 +29,36 @@ export function ViewingFeedbackForm() {
     event.preventDefault();
 
     startTransition(async () => {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      try {
+        const response = await fetch("/api/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
 
-      const payload = (await response.json()) as { message?: string };
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
 
-      if (!response.ok) {
-        toast.error(payload.message ?? "Could not save feedback");
-        return;
+        if (!response.ok) {
+          toast.error(payload.message ?? "Could not save feedback");
+          return;
+        }
+
+        toast.success(payload.message ?? "Feedback saved");
+        setForm({
+          propertyName: "",
+          viewerName: "",
+          rating: 4,
+          liked: "",
+          disliked: "",
+          priceOpinion: "",
+          wouldRecommend: true,
+          interested: true,
+          comments: "",
+        });
+        router.refresh();
+      } catch {
+        toast.error("Unable to reach the server. Please try again.");
       }
-
-      toast.success(payload.message ?? "Feedback saved");
-      setForm({
-        propertyName: "",
-        viewerName: "",
-        rating: 4,
-        liked: "",
-        disliked: "",
-        priceOpinion: "",
-        wouldRecommend: true,
-        interested: true,
-        comments: "",
-      });
-      router.refresh();
     });
   }
 
