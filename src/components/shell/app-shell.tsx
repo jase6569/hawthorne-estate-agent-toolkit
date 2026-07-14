@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -44,6 +45,11 @@ type AppShellProps = {
 
 export function AppShell({ userName, userEmail, children }: AppShellProps) {
   const pathname = usePathname();
+  const [navOpen, setNavOpen] = useState(false);
+
+  useEffect(() => {
+    setNavOpen(false);
+  }, [pathname]);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(201,162,39,0.08),transparent_30%),linear-gradient(to_bottom_right,rgba(255,255,255,0.02),transparent)]">
@@ -102,13 +108,13 @@ export function AppShell({ userName, userEmail, children }: AppShellProps) {
           <header className="glass-panel sticky top-4 z-30 rounded-[1.75rem] border border-border/70 px-4 py-3 shadow-soft backdrop-blur-xl lg:px-6">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <Sheet>
+                <Sheet open={navOpen} onOpenChange={setNavOpen}>
                   <SheetTrigger asChild>
                     <Button variant="ghost" size="icon" className="lg:hidden">
                       <Menu className="h-5 w-5" />
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-[320px] border-r border-border/70 bg-background/98">
+                  <SheetContent side="left" className="w-[320px] border-r border-border/70 bg-background">
                     <div className="mb-6 flex items-center gap-3 pr-6">
                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold text-sm font-black text-gold-foreground">
                         H
